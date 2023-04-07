@@ -1,7 +1,10 @@
 import "./index.css";
+import { useAuth0 } from "@auth0/auth0-react";
 import logo from "./CatLogoSvgReSized.svg";
+import Logout from "./Logout";
 
 function Navbar() {
+  const { isAuthenticated } = useAuth0();
   return (
     <nav class="bg-white dark:bg-neutral-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
       <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -12,12 +15,11 @@ function Navbar() {
           </span>
         </a>
         <div class="flex md:order-2">
-          <button
-            type="button"
-            class="text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
-          >
-            Get started
-          </button>
+          {isAuthenticated ? (
+            <Logout />
+          ) : (
+            <null></null>
+          )}
           <button
             data-collapse-toggle="navbar-sticky"
             type="button"
