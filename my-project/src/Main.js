@@ -1,56 +1,97 @@
-import React, { useState } from "react";
+// main.js
+import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import { db } from "./firebase";
 
 function Main() {
   const { user, isAuthenticated } = useAuth0();
   const [todos, setTodos] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
+  async function saveTodosToFirestore(userId, todos) {
+    try {
+      await db.collection("users").doc(userId).set({
+        todos: todos,
+      });
+      console.log("Todos saved to Firestore");
+    } catch (error) {
+      console.error("Error saving todos to Firestore:", error);
+    }
+  }
+
+  async function loadTodosFromFirestore(userId) {
+    try {
+      const docRef = db.collection("users").doc(userId);
+      const doc = await docRef.get();
+      if (doc.exists) {
+        setTodos(doc.data().todos);
+      } else {
+        console.log("No todos found for this user");
+      }
+    } catch (error) {
+      console.error("Error loading todos from Firestore:", error);
+    }
+  }
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadTodosFromFirestore(user.sub);
+    }
+  }, [isAuthenticated, user]);
+
   function handleInputChange(event) {
     setInputValue(event.target.value);
   }
 
-  function handleAddTodo() {
+  async function handleAddTodo() {
     if (inputValue === "") {
       return;
     }
 
     const newTodo = { text: inputValue, completed: false, subNotes: [] };
-    setTodos([...todos, newTodo]);
+    const newTodos = [...todos, newTodo];
+    setTodos(newTodos);
     setInputValue("");
+    await saveTodosToFirestore(user.sub, newTodos);
     console.log("minciucis");
   }
 
-  function handleRemoveTodo(index) {
+  async function handleRemoveTodo(index) {
     const newTodos = [...todos];
     newTodos.splice(index, 1);
     setTodos(newTodos);
+    await saveTodosToFirestore(user.sub, newTodos);
   }
 
-  function handleEditTodoText(index, newText) {
+  async function handleEditTodoText(index, newText) {
     const newTodos = [...todos];
     newTodos[index].text = newText;
     setTodos(newTodos);
+    await saveTodosToFirestore(user.sub, newTodos);
   }
 
-  function handleAddSubNote(index) {
+  async function handleAddSubNote(index) {
     const newTodos = [...todos];
     newTodos[index].subNotes.push("");
     setTodos(newTodos);
+    await saveTodosToFirestore(user.sub, newTodos);
   }
 
-  function handleEditSubNoteText(todoIndex, subNoteIndex, newText) {
+  async function handleEditSubNoteText(todoIndex, subNoteIndex, newText) {
     const newTodos = [...todos];
     newTodos[todoIndex].subNotes[subNoteIndex] = newText;
     setTodos(newTodos);
+    await saveTodosToFirestore(user.sub, newTodos);
   }
 
-  function handleRemoveSubNoteText(todoIndex, subNoteIndex) {
+  async function handleRemoveSubNoteText(todoIndex, subNoteIndex) {
     const newTodos = [...todos];
     newTodos[todoIndex].subNotes.splice(subNoteIndex, 1);
     setTodos(newTodos);
+    await saveTodosToFirestore(user.sub, newTodos);
   }
 
+  // The rest of your component JSX and return statement remain the same
   return (
     isAuthenticated && (
       <div className="inline-block ml-24 mr-0 pr-0 ">
