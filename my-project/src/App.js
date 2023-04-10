@@ -37,7 +37,7 @@ function App() {
           <span class="sr-only">Loading...</span>
         </div>
       </div>
-    ); // Replace this with a loading indicator of your choice
+    );
   }
 
   return (
