@@ -12,7 +12,7 @@ const TaskCalendar = ({ onDateSelect }) => {
   };
 
   return (
-    <Group position="center">
+    <Group className="ml-64">
       <DatePicker type="multiple" value={value} onChange={handleDateChange} />
     </Group>
   );
