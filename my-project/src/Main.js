@@ -140,8 +140,8 @@ function Main() {
   return (
     isAuthenticated && (
       <div className="main-container mt-12">
-        <div className="flex justify-between w-full 64-7xl mx-auto">
-          <div className="ml-36 w-3/5 p-4">
+        <div className="flex justify-between w-full 64-7xl mx-auto ">
+          <div className="ml-36 w-4/5 p-4">
             <TaskInput
               inputValue={inputValue}
               handleInputChange={handleInputChange}

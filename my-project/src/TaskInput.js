@@ -11,7 +11,7 @@ const TaskInput = ({ inputValue, handleInputChange, handleAddTodo }) => {
         placeholder="Enter Task"
       />
       <button
-        className="ml-4 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+        className="ml-4 i font-semibold text-white h-12 w-24 bg-gradient-to-br from-orange-400 to-orange-600 rounded shadow-2xl cursor-pointer overflow-hidden transform hover:scale-x-110 hover:scale-y-105 transition duration-300 ease-out rounded"
         onClick={handleAddTodo}
       >
         Add
