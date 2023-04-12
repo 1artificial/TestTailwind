@@ -63,3 +63,9 @@
     color: #50C878;
     /* Green for low priority */
 }
+
+.due-date {
+    color: #888;
+    font-size: 0.8rem;
+    margin-top: 4px;
+}

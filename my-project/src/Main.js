@@ -5,6 +5,7 @@ import { db } from "./firebase";
 import TaskCalendar from "./TaskCalendar";
 import TaskInput from "./TaskInput";
 import TodoList from "./TodoList";
+import { getMessaging, getToken } from "firebase/messaging";
 
 function Main() {
   const { user, isAuthenticated } = useAuth0();
@@ -58,6 +59,22 @@ function Main() {
         user.sub,
         selectedDates[0].toISOString().split("T")[0]
       );
+
+      // Initialize Firebase Cloud Messaging and request user's permission for notifications
+      const messaging = getMessaging();
+      Notification.requestPermission()
+        .then(async (permission) => {
+          if (permission === "granted") {
+            console.log("Notification permission granted.");
+            const token = await getToken(messaging);
+            console.log("Firebase Cloud Messaging token:", token);
+          } else {
+            console.error("Unable to get permission to notify.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error requesting notification permission:", error);
+        });
     }
   }, [isAuthenticated, user, selectedDates]);
 
@@ -77,10 +94,13 @@ function Main() {
       return;
     }
 
+    const dueDate = selectedDates[0].toISOString().split("T")[0]; // Add this line
+
     const newTodo = {
       text: inputValue,
       completed: false,
       subNotes: [],
+      dueDate,
       priority: inputPriority,
     };
     const newTodos = [...todos, newTodo];

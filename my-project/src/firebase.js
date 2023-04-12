@@ -1,6 +1,7 @@
 // src/firebase.js
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
+import "firebase/compat/messaging";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDPv_MuLa0De81zSNb8GLljaj_lpCQoWFY",
@@ -16,4 +17,22 @@ firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
 
-export { db };
+// Initialize Firebase Messaging
+const messaging = firebase.messaging();
+
+async function requestNotificationsPermission() {
+  try {
+    await messaging.requestPermission();
+    console.log("Notification permission granted.");
+    // TODO: Save the FCM token to Firestore or your database
+  } catch (err) {
+    console.log("Unable to get permission to notify.", err);
+  }
+}
+
+messaging.onMessage((payload) => {
+  console.log("Message received. ", payload);
+  // Customize notification here
+});
+
+export { db, requestNotificationsPermission };

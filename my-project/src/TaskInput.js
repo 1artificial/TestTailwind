@@ -19,7 +19,7 @@ function TaskInput({
       <select
         value={inputPriority}
         onChange={handlePriorityChange}
-        className="font-sans font-semibold border text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block ml-2 p-2 dark:bg-white dark:border-neutral-300 dark:placeholder-neutral-900 dark:text-neutral-900 dark:focus:ring-orange-500 dark:focus:border-orange-500"
+        className="lg:w-24 font-sans font-semibold border text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block ml-2 p-2 dark:bg-white dark:border-neutral-300 dark:placeholder-neutral-900 dark:text-neutral-900 dark:focus:ring-orange-500 dark:focus:border-orange-500"
       >
         <option value="low">Low</option>
         <option value="medium">Medium</option>

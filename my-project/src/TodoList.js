@@ -12,6 +12,10 @@ const TodoList = ({
     <ul>
       {todos.map((todo, index) => (
         <li key={index} className={`task-item ${todo.priority}`}>
+          <div className="due-date text-sm text-gray-500">
+            Due: {todo.dueDate}
+          </div>
+
           <input
             type="text"
             placeholder="Click to edit task"
@@ -32,6 +36,7 @@ const TodoList = ({
           >
             +
           </button>
+
           <ul>
             {todo.subNotes.map((subNote, subNoteIndex) => (
               <li key={subNoteIndex}>
