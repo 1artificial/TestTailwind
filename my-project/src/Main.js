@@ -53,6 +53,25 @@ function Main() {
     }
   }
 
+  async function requestNotificationPermission() {
+    const messaging = getMessaging();
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission === "granted") {
+        console.log("Notification permission granted.");
+        const token = await getToken(messaging);
+        console.log("Firebase Cloud Messaging token:", token);
+
+        // Save the FCM token to Firestore
+        await db.collection("users").doc(user.sub).update({ fcmToken: token });
+      } else {
+        console.error("Unable to get permission to notify.");
+      }
+    } catch (error) {
+      console.error("Error requesting notification permission:", error);
+    }
+  }
+
   useEffect(() => {
     if (isAuthenticated && selectedDates.length > 0) {
       loadTodosFromFirestore(
@@ -60,21 +79,8 @@ function Main() {
         selectedDates[0].toISOString().split("T")[0]
       );
 
-      // Initialize Firebase Cloud Messaging and request user's permission for notifications
-      const messaging = getMessaging();
-      Notification.requestPermission()
-        .then(async (permission) => {
-          if (permission === "granted") {
-            console.log("Notification permission granted.");
-            const token = await getToken(messaging);
-            console.log("Firebase Cloud Messaging token:", token);
-          } else {
-            console.error("Unable to get permission to notify.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error requesting notification permission:", error);
-        });
+      // Request user's permission for notifications and save FCM token
+      requestNotificationPermission();
     }
   }, [isAuthenticated, user, selectedDates]);
 
