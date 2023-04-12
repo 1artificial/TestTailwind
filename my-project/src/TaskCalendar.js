@@ -12,7 +12,7 @@ const TaskCalendar = ({ onDateSelect }) => {
   };
 
   return (
-    <Group className="ml-16">
+    <Group className="lg:ml-16">
       <DatePicker
         type="multiple"
         value={value}

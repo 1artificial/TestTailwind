@@ -48,3 +48,18 @@
         opacity: 20%;
     }
 }
+
+.task-item.high {
+   color: #FF0800;
+    /* Red for high priority */
+}
+
+.task-item.medium {
+    color: #E6A817;
+    /* Yellow for medium priority */
+}
+
+.task-item.low {
+    color: #50C878;
+    /* Green for low priority */
+}

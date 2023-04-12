@@ -11,6 +11,11 @@ function Main() {
   const [todos, setTodos] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [selectedDates, setSelectedDates] = useState([]);
+  const [inputPriority, setInputPriority] = useState("low");
+
+  function handlePriorityChange(event) {
+    setInputPriority(event.target.value);
+  }
 
   async function saveTodosToFirestore(userId, todos, date) {
     try {
@@ -60,12 +65,24 @@ function Main() {
     setInputValue(event.target.value);
   }
 
+  function sortTasksByPriority(todos) {
+    const priorityOrder = { high: 1, medium: 2, low: 3 };
+    return todos
+      .slice()
+      .sort((a, b) => priorityOrder[a.priority] - priorityOrder[b.priority]);
+  }
+
   async function handleAddTodo() {
     if (inputValue === "") {
       return;
     }
 
-    const newTodo = { text: inputValue, completed: false, subNotes: [] };
+    const newTodo = {
+      text: inputValue,
+      completed: false,
+      subNotes: [],
+      priority: inputPriority,
+    };
     const newTodos = [...todos, newTodo];
     setTodos(newTodos);
     setInputValue("");
@@ -131,9 +148,9 @@ function Main() {
     );
   }
 
-  function handleSelectedDatesChange(dates) {
-    setSelectedDates(dates);
-  }
+  // function handleSelectedDatesChange(dates) {
+  //   setSelectedDates(dates);
+  // }
 
   //<TaskCalendar onDateSelect={(dates) => setSelectedDates(dates)} />
 
@@ -141,14 +158,16 @@ function Main() {
     isAuthenticated && (
       <div className="main-container mt-12">
         <div className="flex justify-between w-full 64-7xl mx-auto ">
-          <div className="ml-36 w-4/5 p-4">
+          <div className="lg:ml-36 w-4/5 lg:p-4 p-2 pt-4">
             <TaskInput
               inputValue={inputValue}
               handleInputChange={handleInputChange}
               handleAddTodo={handleAddTodo}
+              inputPriority={inputPriority}
+              handlePriorityChange={handlePriorityChange}
             />
             <TodoList
-              todos={todos}
+              todos={sortTasksByPriority(todos)}
               handleEditTodoText={handleEditTodoText}
               handleRemoveTodo={handleRemoveTodo}
               handleAddSubNote={handleAddSubNote}
@@ -156,7 +175,7 @@ function Main() {
               handleRemoveSubNoteText={handleRemoveSubNoteText}
             />
           </div>
-          <div className="w-2/5 p-4">
+          <div className="lg:w-2/5 lg:p-4 invisible lg:visible">
             <TaskCalendar onDateSelect={(dates) => setSelectedDates(dates)} />
           </div>
         </div>
