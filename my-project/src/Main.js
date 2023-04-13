@@ -143,7 +143,8 @@ function Main() {
 
   async function handleAddSubNote(index) {
     const newTodos = [...todos];
-    newTodos[index].subNotes.push("");
+    const targetTodo = newTodos[index];
+    targetTodo.subNotes.push("");
     setTodos(newTodos);
     await saveTodosToFirestore(
       user.sub,
@@ -154,7 +155,8 @@ function Main() {
 
   async function handleEditSubNoteText(todoIndex, subNoteIndex, newText) {
     const newTodos = [...todos];
-    newTodos[todoIndex].subNotes[subNoteIndex] = newText;
+    const targetTodo = newTodos[todoIndex];
+    targetTodo.subNotes[subNoteIndex] = newText;
     setTodos(newTodos);
     await saveTodosToFirestore(
       user.sub,
@@ -165,7 +167,8 @@ function Main() {
 
   async function handleRemoveSubNoteText(todoIndex, subNoteIndex) {
     const newTodos = [...todos];
-    newTodos[todoIndex].subNotes.splice(subNoteIndex, 1);
+    const targetTodo = newTodos[todoIndex];
+    targetTodo.subNotes.splice(subNoteIndex, 1);
     setTodos(newTodos);
     await saveTodosToFirestore(
       user.sub,
@@ -173,7 +176,6 @@ function Main() {
       selectedDates[0].toISOString().split("T")[0]
     );
   }
-
   // function handleSelectedDatesChange(dates) {
   //   setSelectedDates(dates);
   // }
@@ -193,7 +195,7 @@ function Main() {
               handlePriorityChange={handlePriorityChange}
             />
             <TodoList
-              todos={sortTasksByPriority(todos)}
+              todos={todos}
               handleEditTodoText={handleEditTodoText}
               handleRemoveTodo={handleRemoveTodo}
               handleAddSubNote={handleAddSubNote}

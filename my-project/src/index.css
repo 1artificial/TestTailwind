@@ -50,18 +50,18 @@
 }
 
 .task-item.high {
-   color: #FF0800;
-    /* Red for high priority */
+    color: #545e75;
+    /* Blue for high priority */
 }
 
 .task-item.medium {
-    color: #E6A817;
-    /* Yellow for medium priority */
+    color: #63adf2;
+    /* Light blue for medium priority */
 }
 
 .task-item.low {
-    color: #50C878;
-    /* Green for low priority */
+    color: #FBCEB1;
+    /* Lighter blue for low priority */
 }
 
 .due-date {

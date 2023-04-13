@@ -1,25 +1,38 @@
 import React from "react";
 
-const TodoList = ({
+function TodoList({
   todos,
   handleEditTodoText,
   handleRemoveTodo,
   handleAddSubNote,
   handleEditSubNoteText,
   handleRemoveSubNoteText,
-}) => {
+}) {
+  const getTaskColor = (priority) => {
+    switch (priority) {
+      case "high":
+        return "text-red-600";
+      case "medium":
+        return "text-yellow-600";
+      case "low":
+      default:
+        return "text-green-600";
+    }
+  };
+
   return (
-    <ul>
+    <div className="todo-list">
       {todos.map((todo, index) => (
-        <li key={index} className={`task-item ${todo.priority}`}>
+        <div key={index}>
           <div className="due-date text-sm text-gray-500">
             Due: {todo.dueDate}
           </div>
-
           <input
             type="text"
             placeholder="Click to edit task"
-            className="mt-3 w-5/6 h-10 font-sans font-semibold rounded-md border-0 py-3 pl-3 text-{`task-item ${todo.priority}`} ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-200 sm:text-sm sm:leading-6"
+            className={`mt-3 w-5/6 h-10 font-sans font-semibold rounded-md border-0 py-3 pl-3 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-200 sm:text-sm sm:leading-6 ${getTaskColor(
+              todo.priority
+            )}`}
             value={todo.text}
             onChange={(event) => handleEditTodoText(index, event.target.value)}
           />
@@ -36,10 +49,9 @@ const TodoList = ({
           >
             +
           </button>
-
           <ul>
             {todo.subNotes.map((subNote, subNoteIndex) => (
-              <li key={subNoteIndex}>
+              <li key={`${todo.text}-${subNoteIndex}`}>
                 <input
                   placeholder="Click to add a note"
                   className="h-10 mt-2 w-4/5 font-sans font-semibold rounded-md h-11 border-0 py-3 pl-3 pr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-200 sm:text-sm sm:leading-6 break-words"
@@ -62,10 +74,10 @@ const TodoList = ({
               </li>
             ))}
           </ul>
-        </li>
+        </div>
       ))}
-    </ul>
+    </div>
   );
-};
+}
 
 export default TodoList;
