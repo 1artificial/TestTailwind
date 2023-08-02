@@ -1,4 +1,23 @@
-Descrierea softului folosit:
+EN: Taskify: Your Task Management Solution
+Taskify is a user-friendly task management web application designed with React, a leading JavaScript library for building user interfaces. Its integrated features and intuitive design make it a top choice for anyone looking to streamline their daily workflow.
+
+Software Description:
+Taskify utilizes Auth0, a universal authentication and authorization service, for user sign-in, making the authentication process smooth and secure. The app includes a Firestore database from Firebase to store tasks and user authentication data, ensuring efficient and reliable data management.
+
+Personal Contributions:
+I developed the core code that manages user interactions and the basic logic of the application. The created UI components include task input, task list, and calendar, forming the backbone of Taskify's functionality. Functions were implemented for adding, removing, and editing tasks, as well as handling subordinated notes. Task priority management and loading/saving tasks from the Firestore database have also been implemented, alongside authentication through Auth0.
+
+Third-Party Elements:
+Elements from other sources include the React library, Auth0 SDK for user authentication, and Firebase library to interact with the Firestore database. The calendar component was sourced from the Mantine library.
+
+How to Use the Application:
+Users need to authenticate first using Auth0 functionality. Once logged in, they can add new tasks, set a priority (low, medium, or high), and a due date. Users can also edit and delete existing tasks, and add subordinate notes for each task. All tasks and associated data are saved in the Firestore database and are loaded from the database upon user authentication.
+
+Minimum Hardware Requirements:
+As a web application, Taskify's hardware requirements are minimal. Users will need a device with a modern web browser (such as Chrome, Firefox, Safari, or Edge) and an internet connection. Auth0 authentication may require the ability to open a new window or tab in the browser.
+
+
+RO: Descrierea softului folosit:
 Aplicația "Taskify" este un site de gestionare a sarcinilor (task-uri), dezvoltată folosind React, o bibliotecă JavaScript pentru construirea de interfețe de utilizator. Pentru autentificare, aplicația folosește Auth0, un serviciu universal de autentificare și autorizare pentru aplicații web, mobile și API. Aplicația include o bază de date Firestore de la Firebase pentru stocarea sarcinilor și a datelor de autentificare a utilizatorilor.
 
 Descrierea părții cu aport propriu:
